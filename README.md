@@ -17,7 +17,7 @@ The following native APIs are used:
  - macOS/iOS: `SecRandomCopyBytes` from the security framework
  - FreeBSD/OpenBSD/NetBSD: `arc4random_buf` (which does not use ARC4 anymore but a secure PRF like
    [ChaCha20](https://cr.yp.to/chacha.html))
- - Windows: `BCryptGenRandom` with `BCRYPT_USE_SYSTEM_PREFERRED_RNG`
+ - Windows: `CryptGenRandom` with `PROV_RSA_FULL` as provider
  - Linux: `getrandom` for glibc versions >= 2.25 or `/dev/urandom` for ancient distributions
 
 
