@@ -32,7 +32,7 @@ uint8_t crypto_api_osrandom_secrandom(uint8_t* buf, size_t len) {
 	#elif defined(USE_SECRANDOMCOPYBYTES)
 		return SecRandomCopyBytes(kSecRandomDefault, len, buf) == errSecSuccess ? 0 : 1;
 	#elif defined(USE_CRYPTGENRANDOM)
-		HCRYPTPROV rng = NULL;
+		HCRYPTPROV rng;
 		if (CryptAcquireContext(&rng, NULL, NULL, PROV_RSA_FULL, CRYPT_SILENT) == 0) return 1;
 		
 		uint8_t ret_val = CryptGenRandom(rng, (DWORD)len, (BYTE*)buf) == 0 ? 1 : 0;
