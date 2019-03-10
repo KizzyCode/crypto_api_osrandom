@@ -15,7 +15,7 @@ fn linux_check_getrandom() -> Option<&'static str> {
 		fn gnu_get_libc_version() -> *const c_char;
 	}
 	let v: Vec<u8> = unsafe{ CStr::from_ptr(gnu_get_libc_version()) }.to_str().unwrap()
-		.split(".").map(|s| u32::from_str(s).unwrap()).collect();
+		.split(".").map(|s| u8::from_str(s).unwrap()).collect();
 	
 	// Validate version
 	match (v[0], v[1]) {
@@ -35,7 +35,7 @@ fn main() {
 	#[cfg(target_os = "freebsd")] { secure_random = Some("USE_ARC4RANDOM") }
 	#[cfg(target_os = "openbsd")] { secure_random = Some("USE_ARC4RANDOM") }
 	#[cfg(target_os = "netbsd")] { secure_random = Some("USE_ARC4RANDOM") }
-	#[cfg(target_os = "windows")] { secure_random = Some("USE_BCRYPTGENRANDOM") }
+	#[cfg(target_os = "windows")] { secure_random = Some("USE_CRYPTGENRANDOM") }
 	#[cfg(target_os = "linux")] { secure_random = linux_check_getrandom() }
 	
 	// Check if we have a secure random number generator
