@@ -10,8 +10,9 @@
 	// `stdlib.h` is already included
 #elif defined(USE_SECRANDOMCOPYBYTES)
 	#include <Security/SecRandom.h>
-#elif defined(USE_BCRYPTGENRANDOM)
-	#include <bcrypt.h>
+#elif defined(USE_CRYPTGENRANDOM)
+	#include <windows.h>
+	#include <Wincrypt.h>
 #elif defined(USE_DEV_URANDOM)
 	#include <stdio.h>
 #endif
@@ -30,9 +31,13 @@ uint8_t crypto_api_osrandom_secrandom(uint8_t* buf, size_t len) {
 		return 0;
 	#elif defined(USE_SECRANDOMCOPYBYTES)
 		return SecRandomCopyBytes(kSecRandomDefault, len, buf) == errSecSuccess ? 0 : 1;
-	#elif defined(USE_BCRYPTGENRANDOM)
-		NTSTATUS r = BCryptGenRandom(NULL, (PUCHAR)buf, (ULONG)len, BCRYPT_USE_SYSTEM_PREFERRED_RNG);
-		return r == STATUS_SUCCESS ? 0 : 1
+	#elif defined(USE_CRYPTGENRANDOM)
+		HCRYPTPROV rng = NULL;
+		if (CryptAcquireContext(&rng, NULL, NULL, PROV_RSA_FULL, CRYPT_SILENT) == 0) return 1;
+		
+		uint8_t ret_val = CryptGenRandom(rng, (DWORD)len, (BYTE*)buf) == 0 ? 1 : 0;
+		CryptReleaseContext(rng, 0);
+		return ret_val;
 	#elif defined(USE_DEV_URANDOM)
 		FILE* urandom = fopen("/dev/urandom", "r");
 		if (urandom == NULL) return 1;
