@@ -1,4 +1,5 @@
 /// Links the security framework and returns the implementation
+#[cfg(any(target_os = "macos", target_os = "ios"))]
 fn macos_ios_secrandomcopybytes() -> Option<&'static str> {
 	println!("cargo:rustc-link-lib=framework=Security");
 	Some("USE_SECRANDOMCOPYBYTES")
@@ -9,7 +10,7 @@ fn macos_ios_secrandomcopybytes() -> Option<&'static str> {
 #[cfg(target_os = "linux")]
 fn linux_check_getrandom() -> Option<&'static str> {
 	// Get libc version
-	use std::{ u32, ffi::CStr, os::raw::c_char, str::FromStr };
+	use std::{ ffi::CStr, os::raw::c_char, str::FromStr };
 	extern "C" {
 		// const char *gnu_get_libc_version(void);
 		fn gnu_get_libc_version() -> *const c_char;
