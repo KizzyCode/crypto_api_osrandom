@@ -1,7 +1,7 @@
 [package]
 name = "crypto_api_osrandom"
 edition = "2018"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Keziah Biermann <development@kizzycode.de>"]
 description = "An interface to the OS' secure random number generator for `crypto_api`"
 keywords = ["Crypto", "Random", "CSPRNG", "PRNG", "RNG"]
@@ -11,7 +11,7 @@ readme = "README.md"
 
 
 [dependencies]
-crypto_api = "0.1.13"
+crypto_api = "0.1.14"
 
 [build-dependencies]
 cc = "1.0.30"
