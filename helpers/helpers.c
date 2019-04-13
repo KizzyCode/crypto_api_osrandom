@@ -25,7 +25,7 @@
 /// \return 0 on success or 1 in case of an error
 uint8_t crypto_api_osrandom_secrandom(uint8_t* buf, size_t len) {
 	#if defined(USE_GETRANDOM)
-		return getrandom(buf, len, 0) == -1 ? 1 : 0
+		return getrandom(buf, len, 0) == -1 ? 1 : 0;
 	#elif defined(USE_ARC4RANDOM)
 		arc4random_buf(buf, len);
 		return 0;
@@ -56,6 +56,6 @@ uint8_t crypto_api_osrandom_secrandom(uint8_t* buf, size_t len) {
 		fclose(urandom);
 		return 0;
 	#else
-		#error "No secure random number generator selected (this is a build-system error)"
+		#error "No secure random number generator selected (this is a build system error)"
 	#endif
 }
