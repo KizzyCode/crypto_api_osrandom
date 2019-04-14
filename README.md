@@ -1,7 +1,12 @@
-[![License](https://img.shields.io/badge/License-BSD--2--Clause-blue.svg)](https://opensource.org/licenses/BSD-2-Clause)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![docs.rs](https://docs.rs/crypto_api_osrandom/badge.svg)](https://docs.rs/crypto_api_osrandom)
+[![License BSD-2-Clause](https://img.shields.io/badge/License-BSD--2--Clause-blue.svg)](https://opensource.org/licenses/BSD-2-Clause)
+[![License MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![crates.io](https://img.shields.io/crates/v/crypto_api_osrandom.svg)](https://crates.io/crates/crypto_api_osrandom)
+[![Download numbers](https://img.shields.io/crates/d/crypto_api_osrandom.svg)](https://crates.io/crates/crypto_api_osrandom)
 [![Travis CI](https://travis-ci.org/KizzyCode/crypto_api_chachapoly.svg?branch=master)](https://travis-ci.org/KizzyCode/crypto_api_chachapoly)
 [![AppVeyor CI](https://ci.appveyor.com/api/projects/status/github/KizzyCode/crypto_api_chachapoly?svg=true)](https://ci.appveyor.com/project/KizzyCode/crypto-api-chachapoly)
+[![dependency status](https://deps.rs/crate/crypto_api_osrandom/0.1.3/status.svg)](https://deps.rs/crate/crypto_api_osrandom/0.1.3)
+
 
 # crypto_api_osrandom
 Welcome to `crypto_api_osrandom` 🎉

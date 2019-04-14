@@ -9,6 +9,13 @@ license = "BSD-2-Clause OR MIT"
 repository = "https://github.com/KizzyCode/crypto_api_osrandom"
 readme = "README.md"
 
+[badges]
+travis-ci = { repository = "https://github.com/KizzyCode/crypto_api_osrandom", branch = "master" }
+appveyor = { repository = "https://github.com/KizzyCode/crypto_api_osrandom", branch = "master" }
+maintenance = { statue = "actively-developed" }
+is-it-maintained-open-issues = { repository = "https://github.com/KizzyCode/crypto_api_osrandom" }
+is-it-maintained-issue-resolution = { repository = "https://github.com/KizzyCode/crypto_api_osrandom" }
+
 
 [dependencies]
 crypto_api = "0.2.2"
