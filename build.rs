@@ -40,10 +40,8 @@ fn main() {
 	#[cfg(target_os = "linux")] { secure_random = linux_check_getrandom() }
 	
 	// Check if we have a secure random number generator
-	let secure_random = match secure_random {
-		Some(secure_random) => secure_random,
-		None => panic!("No secure random number generator known for your target platform")
-	};
+	let secure_random = secure_random
+		.expect("No secure random number generator known for your target platform");
 	
 	// Compile and link the library
 	cc::Build::new()
