@@ -3,9 +3,8 @@
 [![License MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![crates.io](https://img.shields.io/crates/v/crypto_api_osrandom.svg)](https://crates.io/crates/crypto_api_osrandom)
 [![Download numbers](https://img.shields.io/crates/d/crypto_api_osrandom.svg)](https://crates.io/crates/crypto_api_osrandom)
-[![Travis CI](https://travis-ci.org/KizzyCode/crypto_api_chachapoly.svg?branch=master)](https://travis-ci.org/KizzyCode/crypto_api_chachapoly)
-[![AppVeyor CI](https://ci.appveyor.com/api/projects/status/github/KizzyCode/crypto_api_chachapoly?svg=true)](https://ci.appveyor.com/project/KizzyCode/crypto-api-chachapoly)
-[![dependency status](https://deps.rs/crate/crypto_api_osrandom/0.1.3/status.svg)](https://deps.rs/crate/crypto_api_osrandom/0.1.3)
+[![AppVeyor CI](https://ci.appveyor.com/api/projects/status/github/KizzyCode/crypto_api_osrandom?svg=true)](https://ci.appveyor.com/project/KizzyCode/crypto-api-osrandom)
+[![dependency status](https://deps.rs/crate/crypto_api_osrandom/0.1.6/status.svg)](https://deps.rs/crate/crypto_api_osrandom/0.1.6)
 
 
 # crypto_api_osrandom
