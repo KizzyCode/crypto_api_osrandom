@@ -20,7 +20,7 @@ fn linux_check_getrandom() -> Option<&'static str> {
 	
 	// Validate version
 	match (v[0], v[1]) {
-		(2...255, 25...255) => Some("USE_GETRANDOM"),
+		(2..=255, 25..=255) => Some("USE_GETRANDOM"),
 		_ => Some("USE_DEV_URANDOM")
 	}
 }
