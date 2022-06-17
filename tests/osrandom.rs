@@ -1,4 +1,4 @@
-use crypto_api_osrandom::{Error, OsRandom};
+use crypto_api_osrandom::error::Error;
 
 /// The amount of iterations over all tests
 const TEST_ITERATIONS: usize = 8;
@@ -32,7 +32,7 @@ fn test() -> Result<(), Error> {
     for _ in 0..TEST_ITERATIONS {
         for len in TEST_LENS {
             // Test the random data
-            let buf = OsRandom.to_vec(*len)?;
+            let buf = crypto_api_osrandom::to_vec(*len)?;
             test_uniform_dist(&buf)
         }
     }
