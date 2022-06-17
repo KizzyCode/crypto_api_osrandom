@@ -1,11 +1,7 @@
 //! Implements the `crypto_api` type
 #![cfg(feature = "crypto_api")]
 
-use crate::error::Error;
-use std::{
-    error,
-    fmt::{Display, Formatter, Result as FmtResult},
-};
+use std::error;
 
 /// An interface to the operating system's secure random number generator
 pub struct OsRandom;
