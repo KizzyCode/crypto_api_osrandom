@@ -4,7 +4,7 @@
 [![crates.io](https://img.shields.io/crates/v/crypto_api_osrandom.svg)](https://crates.io/crates/crypto_api_osrandom)
 [![Download numbers](https://img.shields.io/crates/d/crypto_api_osrandom.svg)](https://crates.io/crates/crypto_api_osrandom)
 [![AppVeyor CI](https://ci.appveyor.com/api/projects/status/github/KizzyCode/crypto_api_osrandom?svg=true)](https://ci.appveyor.com/project/KizzyCode/crypto-api-osrandom)
-[![dependency status](https://deps.rs/crate/crypto_api_osrandom/0.1.6/status.svg)](https://deps.rs/crate/crypto_api_osrandom/0.1.6)
+[![dependency status](https://deps.rs/crate/crypto_api_osrandom/0.2.0/status.svg)](https://deps.rs/crate/crypto_api_osrandom/0.2.0)
 
 
 # crypto_api_osrandom
@@ -23,8 +23,3 @@ The following native APIs are used:
    [ChaCha20](https://cr.yp.to/chacha.html))
  - Windows: `CryptGenRandom` with `PROV_RSA_FULL` as provider
  - Linux: `getrandom` for glibc versions >= 2.25 or `/dev/urandom` for ancient distributions
-
-
-## Dependencies
-Because this code implements the [`crypto_api`](https://github.com/KizzyCode/crypto_api), it depends
-on the `crypto_api`-crate. Otherwise, it's dependency less.

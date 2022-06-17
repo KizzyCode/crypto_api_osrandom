@@ -1,53 +1,60 @@
-/// Links the security framework and returns the implementation
-#[cfg(any(target_os = "macos", target_os = "ios"))]
-fn macos_ios_secrandomcopybytes() -> Option<&'static str> {
-	println!("cargo:rustc-link-lib=framework=Security");
-	Some("USE_SECRANDOMCOPYBYTES")
-}
-
+use cc::Build;
+use std::env::consts::OS;
 
 /// Checks if the current glibc version supports `getrandom`
-#[cfg(target_os = "linux")]
-fn linux_check_getrandom() -> Option<&'static str> {
-	// Get libc version
-	use std::{ ffi::CStr, os::raw::c_char, str::FromStr };
-	extern "C" {
-		// const char *gnu_get_libc_version(void);
-		fn gnu_get_libc_version() -> *const c_char;
-	}
-	let v: Vec<u8> = unsafe{ CStr::from_ptr(gnu_get_libc_version()) }.to_str().unwrap()
-		.split(".").map(|s| u8::from_str(s).unwrap()).collect();
-	
-	// Validate version
-	match (v[0], v[1]) {
-		(2..=255, 25..=255) => Some("USE_GETRANDOM"),
-		_ => Some("USE_DEV_URANDOM")
-	}
+fn linux_has_getrandom() -> bool {
+    #[cfg(target_os = "linux")]
+    {
+        // Get libc version
+        use std::{ffi::CStr, os::raw::c_char, str::FromStr};
+
+        // glibc bindings
+        extern "C" {
+            // const char *gnu_get_libc_version(void);
+            fn gnu_get_libc_version() -> *const c_char;
+        }
+
+        // Parse the version
+        let version_ptr = unsafe { gnu_get_libc_version() };
+        let version_str = unsafe { CStr::from_ptr(version_ptr) }
+            .to_str()
+            .expect("glibc version is not a valid string?!");
+        let version: Vec<_> = version_str
+            .split('.')
+            .map(|s| u8::from_str(s).expect("Invalid glibc version?!"))
+            .collect();
+
+        // Ensure glibc-version is >= 2.2
+        match version.as_slice() {
+            [2..=255, 25..=255, ..] => return true,
+            _ => return false,
+        }
+    }
+
+    // Otherwise, return false
+    #[allow(unreachable_code)]
+    false
 }
 
+/// Select the random number generator
+fn select_random() -> &'static str {
+    match OS {
+        "macos" | "ios" => {
+            println!("cargo:rustc-link-lib=framework=Security");
+            "librandom/secrandomcopybytes.c"
+        }
+        "freebsd" | "openbsd" | "netbsd" => "librandom/arc4random.c",
+        "windows" => "librandom/cryptgenrandom.c",
+        "linux" if linux_has_getrandom() => "librandom/getrandom.c",
+        "linux" => "librandom/urandom.c",
+        os => panic!("Unsupported target OS: {os}"),
+    }
+}
 
 fn main() {
-	// Determine which secure random number generator to use
-	#[allow(unused_assignments)]
-	let mut secure_random = None;
-	
-	#[cfg(target_os = "macos")] { secure_random = macos_ios_secrandomcopybytes() }
-	#[cfg(target_os = "ios")] { secure_random = macos_ios_secrandomcopybytes() }
-	#[cfg(target_os = "freebsd")] { secure_random = Some("USE_ARC4RANDOM") }
-	#[cfg(target_os = "openbsd")] { secure_random = Some("USE_ARC4RANDOM") }
-	#[cfg(target_os = "netbsd")] { secure_random = Some("USE_ARC4RANDOM") }
-	#[cfg(target_os = "windows")] { secure_random = Some("USE_CRYPTGENRANDOM") }
-	#[cfg(target_os = "linux")] { secure_random = linux_check_getrandom() }
-	
-	// Check if we have a secure random number generator
-	let secure_random = secure_random
-		.expect("No secure random number generator known for your target platform");
-	
-	// Compile and link the library
-	cc::Build::new()
-		.file("helpers/helpers.c")
-		.define(secure_random, None)
-		.warnings_into_errors(true)
-		.compile("helpers");
-	println!("cargo:rustc-link-lib=static=helpers");
+    // Compile and link the library
+    Build::new()
+        .file(select_random())
+        .warnings_into_errors(true)
+        .compile("helpers");
 }

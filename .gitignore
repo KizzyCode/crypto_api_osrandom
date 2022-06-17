@@ -2,6 +2,5 @@
 .DS_Store
 
 # Ignore build results
-Cargo.lock
-target/
-helpers/cmake-build-debug
+/Cargo.lock
+/target
