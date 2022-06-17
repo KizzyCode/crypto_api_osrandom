@@ -14,8 +14,8 @@ uint8_t crypto_api_osrandom_native(uint8_t* buf, size_t len) {
     // Acquire context
     HCRYPTPROV rng;
     if (CryptAcquireContext(&rng, NULL, NULL, PROV_RSA_FULL, CRYPT_SILENT) == 0) {
-        return 1
-    };
+        return 1;
+    }
     
     // Generate random data
     if (CryptGenRandom(rng, (DWORD)len, (BYTE*)buf) == 0) {
