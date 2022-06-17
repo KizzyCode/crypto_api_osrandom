@@ -1,10 +1,12 @@
 #![doc = include_str!("../README.md")]
 
-use crate::error::Error;
-
 #[macro_use]
 pub mod error;
 pub mod crypto_api;
+
+#[cfg(feature = "crypto_api")]
+pub use crate::crypto_api::OsRandom;
+use crate::error::Error;
 
 /// Fills the given slice with crpytographically secure random bytes
 pub fn to_slice(slice: &mut [u8]) -> Result<(), Error> {
